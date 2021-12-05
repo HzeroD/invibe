@@ -1,5 +1,7 @@
 import axios from "axios"
 import { Bar } from "../models/bar.js"
+import { Cocktail } from "../models/cocktail.js"
+
 
 function index(req, res){
     res.send("INDEX PAGE FOR API RESOURCES")
@@ -24,6 +26,35 @@ function show(req, res) {
     })
 }
 
+function barExists(req, res) {
+    
+    Bar.findOne({id: req.params.id}) 
+    .then(bar => {
+        console.log("-------------->>>>",bar)
+        if(bar) {res.json(bar)}
+        else {
+            Bar.create(req.body)
+            .then(newBar => {
+             newBar.populate('cocktails')
+             res.json(newBar)
+    }) }
+    
+   
+   })
+   
+}
+
+function createCocktailReview(req, res) {
+    Cocktail.create(req.body)
+    .then(cocktail => {
+        cocktail.barID = req.params.id
+        Bar.findById(req.params.id)
+        .then(bar => {
+            bar.cocktails.push = cocktail
+        })
+    })
+
+}
 
 
 
@@ -31,5 +62,7 @@ function show(req, res) {
 export {
     index, 
     showBars,
-    show
+    show,
+    barExists,
+    createCocktailReview
 }

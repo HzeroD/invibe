@@ -1,3 +1,4 @@
+import * as tokenService from '../services/tokenService'
 function getLocation(location) {  
   return fetch(`/api/resources/${location}`)
   .then(res => res.json())
@@ -9,9 +10,27 @@ function getBarDetails(id) {  // cocktails-route(Merkis) branch; this function g
 }
 
 
+function barExistsServicesFunction(barData) {
+  return fetch(`/cocktails/${barData.id}`,{
+    method: 'PATCH',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(barData)
+  })
+  .then(res => res.json())
+}
+
+function createCocktail() {
+  
+}
+
+
 export {
   getLocation,
-  getBarDetails
+  getBarDetails,
+  barExistsServicesFunction,
+  createCocktail
 }
 
 // comment 
