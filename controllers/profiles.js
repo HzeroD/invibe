@@ -4,13 +4,25 @@ function index(req, res) {
   Profile.find({})
   .populate([
     {
+      path: 'name'
+    },
+    {
+      path: 'email'
+    },
+    {
+      path: 'avatar'
+    },
+    {
+      path: 'bio'
+    },
+    {
       path: 'favLocations'
     },
     {
       path: 'favBars',
     }, 
     {
-      path: 'friends',
+      path: 'followers',
     },
   ])
   .then(profiles => {
@@ -21,7 +33,7 @@ function index(req, res) {
 
   function show(req, res) {
     Profile.findById(req.params.id)
-    // .populate("friends")
+    .populate("followers")
     .then(profiles => {
       res.json(profiles)
     })
@@ -31,6 +43,32 @@ function index(req, res) {
     })
   }
 
+  function addFollower(req, res) {
+    Profile.findById(req.user.profile)
+    .populate('followers')
+    .then(profile => {
+      console.log(profile)
+      profile.followers.push(req.params.id)
+      profile.save()
+      .then(() => {
+        console.log(profile.followers)
+        res.json(profile)
+      })
+    })
+    .catch(err => {
+      console.log(err)
+      res.json(err)
+    })
+  }
+
+
+function deleteFollower(req, res) {
+  Profile.findByIdAndDelete(req.params.id)
+  .then(profile => {
+    res.json(profile)
+  })
+}
+
 
 
 
@@ -38,4 +76,6 @@ function index(req, res) {
 export {
   index,
   show,
+  addFollower,
+  deleteFollower as delete
 }

@@ -6,7 +6,7 @@ const profileSchema = new mongoose.Schema(
     name: String,
     avatar: String,
     bio: String,
-    friends: [{type: mongoose.Schema.Types.ObjectId, ref: 'Profile'}] ,
+    followers: [{type: mongoose.Schema.Types.ObjectId, ref: 'Profile'}] ,
     favBars: [{type: mongoose.Schema.Types.ObjectId, ref: 'Bar'}],
     favLocations: [{type: mongoose.Schema.Types.ObjectId, ref: 'Location'}]
   },
