@@ -25,7 +25,7 @@ function logout() {
 }
 
 function login(credentials) {
-  return fetch(`${BASE_URL}login`, {
+  return fetch(`${BASE_URL}/login`, {
     method: 'POST',
     headers: new Headers({ 'Content-Type': 'application/json'}),
     body: JSON.stringify(credentials)
