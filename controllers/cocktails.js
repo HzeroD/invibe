@@ -10,6 +10,7 @@ function create(req, res) {
             .then(() => {
                 res.json(newCocktail)
             })     
+})
 }
 
 function getAllCocktails(req, res) {

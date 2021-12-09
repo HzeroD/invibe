@@ -28,14 +28,16 @@ const BarDetails = (props) => {
 		deleteCocktail(id)
 		.then(deletedCocktail => {
 			setCocktails(cocktails.filter(cocktail => cocktail._id !== deletedCocktail._id))
+      setComponent([])
 		})
 	}
 
-  const handleEditCocktail = (formData) => {
+  const handleEditCocktail = async (formData) => {
     cocktailServices.editCocktail(formData)
-    .then(editedCocktail => {
-      const newCocktailArray = cocktails.map(cocktail=> cocktail._id === editedCocktail._id ? editedCocktail: cocktail)
+    .then( editedCocktail => {
+       const newCocktailArray =  cocktails.map(cocktail=> cocktail._id === editedCocktail._id ? editedCocktail: cocktail)
 			setCocktails(newCocktailArray)
+      
       setComponent([])
     })
   }
@@ -51,6 +53,15 @@ const BarDetails = (props) => {
     getAllCocktails(bar.id)
     .then(allCocktails => setCocktails(allCocktails))
   },[])
+
+  useEffect(() => {
+    getAllCocktails(bar.id)
+    .then(allCocktails => setCocktails(allCocktails))
+  },[component])
+
+ 
+
+  
 
   return (
     <>

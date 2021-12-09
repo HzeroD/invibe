@@ -70,6 +70,7 @@ function EditCocktail(props) {
         
         <br />
         <button  disabled={isFormInvalid()}>EDIT</button>
+        <button onClick={() => props.resetComponent([])}>CANCEL</button>
      
       </form>
       
